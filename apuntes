@@ -1,0 +1,31 @@
+1. instalar centos 6.7
+	2. yum -y update
+	3. Para php 56
+		3.1. rpm -Uvh https://mirror.webtatic.com/yum/el6/latest.rpm
+		3.2. yum install -y php56w (y todos los demas componentes)
+	4. para Mysql 5.6.x
+		4.1 yum localinstall -y http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
+		4.2 yum install -y mysql-community-server
+		4.3 service mysqld start
+		4.4 chkconfig --levels 235 mysqld on
+		4.5 mysql_secure_installation   (Bases2ol5)
+		4.6 Para poner mysql en español en /etc/my.:cnf
+			[mysqld]
+			datadir=/var/lib/mysql
+			socket=/var/lib/mysql/mysql.sock
+			symbolic-links=0
+			sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+
+
+			[mysqld_safe]
+			log-error=/var/log/mysqld.log
+			pid-file=/var/run/mysqld/mysqld.pid
+			[client]
+			default-character-set=utf8
+			[mysql]
+			default-character-set=utf8
+			[mysqld]
+			collation-server = utf8_general_ci
+			init-connect='SET NAMES utf8'
+			character-set-server = utf8
+		4.7 iptables:  -A INPUT -m state --state NEW -m tcp -p tcp --dport 3306 -j ACCEPT  (para el 80,5432 )
